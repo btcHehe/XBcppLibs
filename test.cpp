@@ -1,5 +1,5 @@
 #include <iostream>
-#include "btcMath.h"
+#include "XBMath.h"
 
 using namespace std;
 
