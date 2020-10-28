@@ -31,7 +31,7 @@ int abs(int number)
 		return number;
 }
 */
-
+//kom
 //---------------------------------------------------------power function-----------------------------------------------------------//
 
 double pow(double base, double power)
