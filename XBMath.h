@@ -22,47 +22,7 @@ namespace xb
   		return number;
   }
   
-  //------------------------------------------------------root functions--------------------------------------------------------------//
-  
-  double rt(double n , double deg)    //the precision is not the best
-  {
-     if(n>0)
-  	{
-  		bool goodEnough = false;
-  		int counter = 0;
-  	 	double rt = 1;
-  	   while(!goodEnough)
-  	 	{
-  	 		double temp = 1; 					//temp is rt*rt*... and depend on deg
-  	 		for( int i = 0; i < deg ; i++)
-  	 		  temp *= rt;
-  	 
-  	 		if(temp == n)
-  	 		  return rt;
-  	 		else if(temp > n)
-  	 		  rt -= rt/1000;
-  	 		else if(temp < n)
-  	 		  rt += rt/1000;	 
-  	 		counter++;
-  	 		if(counter>=10000)
-  	 			goodEnough=true;
-  	    }
-  		return rt;
-    }
-    else if(n == 0)
-  	 return 0;
-    else if(n < 0)
-    {
-  	 throw std::invalid_argument("The argument can't be less than 0");
-    }
-  }
-  
-  double sqrt(double n)
-  {
-    return rt(n , 2);
-  }
-  
-  //---------------------------------------------------------power function-----------------------------------------------------------//
+//---------------------------------------------------------power function-----------------------------------------------------------//
   
   double pow(double base, double power)
   {
@@ -78,17 +38,62 @@ namespace xb
   	}
   	else if(power < 1 && power > 0)
   	{
-  	//TODO calculate a^(x<1) without root func
   		
   	}
   	else if(power < 0)
   	{
   		result = 1/pow(base , abs(power));
   	}
+   else if(power == 0)
+     result = 1;
   
   	return result;
   }
+
+
+  //------------------------------------------------------root functions--------------------------------------------------------------//
   
+  double rt(double n , int deg, double error = 0.00000000000000000001)   //using Newton-Rhapson method 
+  {
+    double xp = 0;
+    double x = n;
+    if(n>0)
+  	 {
+      do
+      {
+        xp = x;                                                         //previous value of approximation
+        x = (1/(double)deg)*((deg-1)*xp + n/pow(x,deg-1));              //current value of our approximation
+      }
+      while(abs(xp-x)>error);                                           //stop approximating after we will pass error 
+    }
+    else if(n == 0)
+      x = 0;
+  	 else if(n < 0)
+    {
+  	   throw std::invalid_argument("The argument can't be less than 0");
+    }
+    return x;
+  }
+  
+  double sqrt(double n, double error = 0.00000000000000000001) 				//using Babylonian method with error set default
+  {
+	 if(n < 0)
+		throw std::invalid_argument("The number must be greater or equal to zero");
+	 else
+	 {
+		double x = n;
+		double y = 1;
+		while( x - y > error )
+		{
+		  x = (x+y)/2;
+		  y = n/x;
+		}
+		return x;
+	 }
+	 return -1;
+  }
+  
+    
   
   //----------------------------------------------------------------logarithm functions----------------------------------------------//
   
