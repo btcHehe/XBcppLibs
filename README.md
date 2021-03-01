@@ -8,7 +8,7 @@ It's set of our own implementations of c/c++ libraries.
 name of library | description	short description
 ----------------|------------
 XBMath.h				| library containing math functions and constants
-XBVector.h			| library containing the vector class
+XBList.h			  | library containing the List data type
 
 
 ## Libraries TODO
