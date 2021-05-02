@@ -58,18 +58,9 @@ namespace xb
 				  maker->prev = last;
 		     	  maker->next = NULL;
 		      }
-				//--------------------------------debug lines-------------------------------
-				std::cout<<"element nr: "<<i<<std::endl;
-				std::cout<<"adres tego elem: "<<maker<<std::endl;
-				std::cout<<"adres next elem:(musi byc 0 bo nastepnego elem nie ma jeszcze) "<<maker->next<<std::endl;
-				std::cout<<"adres prev elem: "<<maker->prev<<std::endl;
-				std::cout<<"adres next dla last elem: "<<last->next<<std::endl;
-				//------------------------------------------------------------------------
-				last = maker;
+			last = maker;
 		    }
-			 //----------------------------------debug lines-------------------------------
-			 std::cout<<"------------------------------------------------------------\n";
-			 for(int i = 0 ; i < size ; i++)
+		 for(int i = 0 ; i < size ; i++)
 			 {
 				element* ptr;
 				if(i == 0)
@@ -81,11 +72,7 @@ namespace xb
 				{
 				  ptr = ptr->next;
 				}
-				std::cout<<"-----------------adres tego elem "<<i<<" : "<<ptr<<std::endl;
-				std::cout<<"adres next elem: "<<ptr->next<<std::endl;
-				std::cout<<"adres prev elem: "<<ptr->prev<<std::endl;
-				std::cout<<"adres next dla last elem: "<<last->next<<std::endl;
-				last = ptr;
+			last = ptr;
 			 }
 			 //-------------------------------------------------------------------------
 		  }
