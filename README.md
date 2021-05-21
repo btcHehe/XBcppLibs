@@ -8,7 +8,12 @@ It's set of our own implementations of c/c++ libraries.
 name of library | description	short description
 ----------------|------------
 XBMath.h				| library containing math functions and constants
-XBList.h			  | library containing the List data type
+XBList.h			  | library containing List data structure
+XBVector.h      | library containing Vector data structure
+XBQueue.h 			| library containing Queue data structure
+XBStack.h 			| library containing Stack data structure
+XBMatrix.h 			| library constaining  Matrix data structure and matrix operations
+
 
 
 ## Libraries TODO
@@ -17,5 +22,5 @@ XBList.h			  | library containing the List data type
 - [ ] XBStack.h
 - [ ] XBQueue.h
 - [ ] XBList.h
-- place for adding more
+- [ ] XBMatrix.h
 

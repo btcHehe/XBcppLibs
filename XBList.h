@@ -29,7 +29,6 @@ namespace xb
 			 element first;
 			 first.next = NULL;
 			 first.prev = NULL;
-			 length++;
 		  }
 		  else
 		  {
@@ -133,6 +132,7 @@ namespace xb
 		  else
 		  {
 			 watcher = firstItem;
+			 watcher = watcher->next;
 			 for(int i = 0; i < index ; i++)
 			 {
 				watcher = watcher->next;
