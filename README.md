@@ -5,7 +5,7 @@ It's set of our own implementations of c++ libraries.
 
 ## Contents
 
-name of library | description	short description
+name of library |	short description
 ----------------|------------
 XBMath.h				| library containing math functions and constants
 XBList.h			  | library containing List data structure
