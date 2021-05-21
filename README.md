@@ -1,7 +1,7 @@
 # XBLibs
 
 ## What is XBLibs?
-It's set of our own implementations of c/c++ libraries.
+It's set of our own implementations of c++ libraries.
 
 ## Contents
 
@@ -18,9 +18,9 @@ XBMatrix.h 			| library constaining  Matrix data structure and matrix operations
 
 ## Libraries TODO
 - [ ] XBMath.h
-- [ ] XBVector.h
+- [x] XBVector.h
 - [ ] XBStack.h
 - [ ] XBQueue.h
-- [ ] XBList.h
+- [x] XBList.h
 - [ ] XBMatrix.h
 
