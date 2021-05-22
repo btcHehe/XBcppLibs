@@ -2,13 +2,10 @@
 #ifndef XBList_H
 #define XBList_H
 
-#include <iostream>
-
 namespace xb
 {
 
   template <typename T>
-  //template <class T>
   class list
   {
 	 struct element

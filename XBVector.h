@@ -16,56 +16,14 @@ namespace xb
 			vector(int size=0)
 			{
 				length = size;
-				if(length != 0)
-					v = new T[length];
-				else
-				{
-					T temp[0];
-					v = temp;
-				}
+				v = new T[length];
 			}
 
 			int size()
 			{
 				return length;
 			}
-
-			void pushBack(T val)
-			{
-				if(length == 0)
-				{
-					length++;
-					v = new T[length];
-					v[0] = val;
-				}
-				else
-				{
-					T* temp = new T[length];
-					for(int i=0; i<length; i++)
-						temp[i] = v[i];
-					length++;
-					v = new T[length];
-					for(int i=0; i<length; i++)
-						v[i] = temp[i];
-					v[length-1] = val;
-					delete [] temp;
-				}
-			}
 			
-			T popBack()
-			{
-				length--;
-				T* temp = new T[length];
-				T popVal = v[-1];
-				for(int i=0; i<length; i++)
-					temp[i] = v[i];
-				v = new T[length];
-				for(int i=0; i<length; i++)
-					v[i] = temp[i];
-				delete[] temp;
-				return popVal;
-			}
-
 			T at(int pos)
 			{
 				if(pos > length-1)
@@ -89,33 +47,49 @@ namespace xb
 				return v[-1];
 			}
 
+			void pushBack(T val)
+			{
+				T* temp = new T[length];
+				length++;
+				temp = v;
+				temp[length-1] = val;
+				v = new T[length];
+				v = temp;
+			}
+
+			T popBack()
+			{
+				T popVal = v[length-1];
+				length--;
+				T* temp = new T[length];
+				temp = v;
+				v = new T[length];
+				v = temp;
+				return popVal;
+			}
+
 			void insert(int pos, T value)
 			{
+				T* frstHalf = new T[pos];
+				T* scndHalf = new T[length-pos];
 				length++;
-				T* temp = new T[length-1];
-				for(int i=0; i<length-1; i++)
-					temp[i] = v[i];
+				frstHalf = v;
+				scndHalf = &v[pos];
 				v = new T[length];
-				for(int i=0; i<pos; i++)
-					v[i] = temp[i];
-				v[pos] = value;
-				for(int i=pos+1; i<length; i++)
-					v[i] = temp[i-1];
+				// idk efficient way needed
 			}
 
 			T erase(int pos)
 			{
-				T removeVal = v[pos];
-				T* temp = new T[length];
-				for(int i=0; i<length; i++)
-					temp[i] = v[i];
+				T* frstHalf = new T[pos];
+				T* scndHalf = new T[length-pos];
+				T retVal = v[pos];
 				length--;
+				frstHalf = v;
+				scndHalf = &v[pos+1];
 				v = new T[length];
-				for(int i=0; i<pos; i++)
-					v[i] = temp[i];
-				for(int i=pos+1; i<length+1; i++)
-					v[i-1] = temp[i];
-				return removeVal;
+				//idk efficient way needed
+				return retVal;
 			}
 
 	};
