@@ -24,8 +24,8 @@ namespace xb
 		  if(size == 0)
 		  {
 			 element first;
-			 first.next = NULL;
-			 first.prev = NULL;
+			 first.next = 0;
+			 first.prev = 0;
 		  }
 		  else
 		  {
@@ -36,23 +36,23 @@ namespace xb
 		      maker = new element;
 	 		 	if(i == 0)
 			 	{
-				  maker->prev = NULL;
-			 	  maker->next = NULL;
+				  maker->prev = 0;
+			 	  maker->next = 0;
 			 	  firstItem = maker;
 				  last = maker;
 			 	}
-			 	else if(i == size - 1)
+			 		else if(i == size - 1)
 			 	{
 				  last->next = maker;
 			 	  maker->prev = last;
-			 	  maker->next = NULL;
+			 	  maker->next = 0;
 			 	  lastItem = maker;
 			 	}
-		      else
+		   	else
 		      {
 				  last->next = maker;
 				  maker->prev = last;
-		     	  maker->next = NULL;
+		     	  maker->next = 0;
 		      }
 			last = maker;
 		    }
@@ -77,7 +77,7 @@ namespace xb
 		{
 		  element* maker = new element;
 		  maker->value = newValue;
-		  maker->next = NULL;
+		  maker->next = 0;
 		  maker->prev = lastItem;
 		  lastItem = maker;
 		  length++;
@@ -88,14 +88,14 @@ namespace xb
 		  element* maker = new element;
 		  maker->value = newValue;
 		  maker->next = firstItem;
-		  maker->prev = NULL;
+		  maker->prev = 0;
 		  firstItem = maker;
 		  length++;
 		}
 
 		void changeValue(int index ,T newValue)           //we start indexing from 0
 		{
-		  element* ptr = NULL;
+		  element* ptr = 0;
 		  if(index >= (length/2))
 		  {
 			 ptr = lastItem;
