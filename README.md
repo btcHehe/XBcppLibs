@@ -18,9 +18,9 @@ XBMatrix.h 			| library constaining  Matrix data structure and matrix operations
 
 ## Libraries TODO
 - [ ] XBMath.h
-- [x] XBVector.h
-- [ ] XBStack.h
-- [ ] XBQueue.h
-- [x] XBList.h
+- [ ] XBVector.h
+- [x] XBStack.h
+- [x] XBQueue.h
+- [ ] XBList.h
 - [ ] XBMatrix.h
 
