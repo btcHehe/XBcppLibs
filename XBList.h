@@ -83,7 +83,7 @@ namespace xb
 		  length++;
 		}
 
-		void pushFirst(T newValue)
+		void pushFront(T newValue)
 		{
 		  element* maker = new element;
 		  maker->value = newValue;
@@ -115,31 +115,41 @@ namespace xb
 		  ptr->value = newValue;
 		}
 
+
+
+		//-----------------for development purpose only-------------------------------//
+
 		T seekValue(int index)
 		{
 		  element* watcher;
-		  if(index >= (length/2))
+		  //if(index >= (length/2))
+		  //{
+		  //  watcher = lastItem;
+		  //  for(int i = 0; i < (length - index - 1); i++)
+		  //  {
+		  // 	  watcher = watcher->prev;
+		  //  }
+		  //}
+		  //else
+		  //{
+		  //  watcher = firstItem;
+		  //  watcher = watcher->next;
+		  //  for(int i = 0; i < index ; i++)
+		  //  {
+		  // 	watcher = watcher->next;
+		  //  }
+		  //}
+		  int i = 0;
+		  watcher = firstItem;
+		  while(i != index)
 		  {
-			 watcher = lastItem;
-			 for(int i = 0; i < (length - index - 1); i++)
-			 {
-				  watcher = watcher->prev;
-			 }
-		  }
-		  else
-		  {
-			 watcher = firstItem;
-			 watcher = watcher->next;
-			 for(int i = 0; i < index ; i++)
-			 {
 				watcher = watcher->next;
-			 }
+				i++;
 		  }
 		  return watcher->value;
 		}
 
 
-		//-----------------for development purpose only-------------------------------//
 		element* seekNext(int index)
 		{
 		  element* watcher;
