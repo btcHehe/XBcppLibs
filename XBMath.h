@@ -116,20 +116,22 @@ namespace xb
     return x;
   }
   
-  double sqrt(double n, double error = 0.00000000000000000001) 				//using Babylonian method with error set default
+  double sqrt(double n) 				    //using Newton algorithm
   {
 	 if(n < 0)
 		throw std::invalid_argument("The number must be greater or equal to zero");
 	 else
 	 {
-		double x = n;
-		double y = 1;
-		while( x - y > error )
+		double y = 0;
+    double x = n/2;     //estimate
+		while( y*y != n )
 		{
-		  x = (x+y)/2;
-		  y = n/x;
+		  y = (x + n/x)/2;
+      if( x == y )
+        break;
+		  x = y;
 		}
-		return x;
+		return y;
 	 }
 	 return -1;
   }
