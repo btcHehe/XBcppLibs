@@ -5,7 +5,7 @@
 
 namespace xb
 {
-  //--------------------------------------------------------constants-----------------------------------------------------------------//
+  //--------------------------------------------------------constants-----------------------------------------------------------------------------//
   
   #define PI 3.14159265358979323846264338327950288419716939937510
   #define e 2.71828182845904523536028747135266249775724709369995
@@ -18,7 +18,7 @@ namespace xb
   double rt(double n , int deg, double error = 0.00000000000000000001);
 
 
-  //--------------------------------------------------------fraction structure--------------------------------------------------------//
+  //--------------------------------------------------------fraction structure--------------------------------------------------------------------//
 
   struct frac
   {
@@ -47,7 +47,7 @@ namespace xb
     return f;
   }
 
-  //------------------------------------------------------abs function----------------------------------------------------------------//
+  //------------------------------------------------------abs function----------------------------------------------------------------------------//
   
   double abs(double number)
   {
@@ -57,7 +57,7 @@ namespace xb
   		return number;
   }
   
-//---------------------------------------------------------power function-----------------------------------------------------------//
+//---------------------------------------------------------power function-------------------------------------------------------------------------//
   
   double pow(double base, double power)
   {
@@ -92,7 +92,7 @@ namespace xb
   }
 
 
-  //------------------------------------------------------root functions--------------------------------------------------------------//
+  //------------------------------------------------------root functions--------------------------------------------------------------------------//
   
   double rt(double n , int deg, double error)   //using Newton-Rhapson method 
   {
@@ -138,7 +138,7 @@ namespace xb
   
     
   
-  //----------------------------------------------------------------logarithm functions----------------------------------------------//
+  //----------------------------------------------------------------logarithm functions-----------------------------------------------------------//
   
   double log(double argument, double base)
   {
@@ -172,17 +172,35 @@ namespace xb
   
   double ln(double argument)
   {
-  	return log(argument, e);
+    if(argument >= 0)
+  	  return log(argument, e);
+    else
+      throw std::invalid_argument("The argument must be non negative");
   }
   
+  //--------------------------------------------------------Combinatorics functions---------------------------------------------------------------//
+
   long double fact(int n)       //use recursion if you don't care about ur memory
   {
-    long double y = 1;
-    for(long double i=1; i<n; i++)
+    if(n >= 0)
     {
-      y *= i;
+      long double y = 1;
+      for(long double i=1; i<n; i++)
+      {
+        y *= i;
+      }
+      return n*y;
     }
-    return n*y;
+    else
+      throw std::invalid_argument("The argument must be non negative");
+  }
+
+  long double bicoef(unsigned long long int n, unsigned long long int k)      //binomial coefficient or nCk/nCr-on calculators
+  {
+    if(n >= k && k >= 0)
+      return fact(n)/(fact(k) * fact(n-k));
+    else
+      throw std::invalid_argument("The arguments must meet the requirement: n>=k and k>=0");
   }
   
 
