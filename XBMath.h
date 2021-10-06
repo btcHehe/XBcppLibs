@@ -174,7 +174,16 @@ namespace xb
   {
   	return log(argument, e);
   }
-
+  
+  long double fact(int n)       //use recursion if you don't care about ur memory
+  {
+    long double y = 1;
+    for(long double i=1; i<n; i++)
+    {
+      y *= i;
+    }
+    return n*y;
+  }
   
 
 }
