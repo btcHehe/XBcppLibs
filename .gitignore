@@ -1,4 +1,4 @@
 Makefile
 test.exe
 test.cpp
-.vscode/settings.json
+.vscode/*
