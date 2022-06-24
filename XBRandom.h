@@ -1,6 +1,4 @@
-
-namespace xb
-{
+namespace xb {
 //------------------------------------linear congruential generator-------------------------------//
 //generates squence of integers between 0 and m-1 by relation I[j+1] = a*I[j] + c % m
 	#define m 2147483647		
@@ -9,14 +7,12 @@ namespace xb
 	
 	unsigned long nextNum = 1;
 	
-	int congRand()
-	{
-		nextNum = nextNum * a + c;
-		return (unsigned int)(nextNum % m);
+	int cong_rand() {
+		next_num = next_num * a + c;
+		return (unsigned int)(next_num % m);
 	}
 	
-	void seedCongRand(unsigned int seed)
-	{
+	void seed_cong_rand(unsigned int seed) {
 		nextNum = seed;
 	}
 
@@ -25,27 +21,22 @@ namespace xb
 	#define IA 16807
 	#define IM 2147483647
 	#define AM 1.0/IM
-  #define IQ 127773
+  	#define IQ 127773
 	#define IR 2836
 	#define MASK 123459876
 	
-	float ran0(long *seedPtr)
-	{
+	float ran0(long *seed_ptr) {
 		long k;
 		float ans;
-		*seedPtr ^= MASK;
-		k = (*seedPtr)/IQ;
-		*seedPtr = IA*(*seedPtr-k*IQ)-IR*k;
-		if(*seedPtr < 0)
-			*seedPtr += IM;
-		ans = AM*(*seedPtr);
-		*seedPtr ^= MASK;
+		*seed_ptr ^= MASK;
+		k = (*seed_ptr)/IQ;
+		*seed_ptr = IA*(*seed_ptr-k*IQ)-IR*k;
+		if(*seed_ptr < 0)
+			*seed_ptr += IM;
+		ans = AM*(*seed_ptr);
+		*seed_ptr ^= MASK;
 		return ans;
 	}
-
-
-
-
 
 }
 

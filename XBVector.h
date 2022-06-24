@@ -2,62 +2,56 @@
 #ifndef XBVector_H
 #define XBVector_H
 
-namespace xb
-{
+#ifndef _INITIALIZER_LIST_
+#include <initializer_list>
+#endif
+
+namespace xb {
 
 	template<typename T>
 
-	class vector
-	{
+	class vector {
 		private:
 			int length;
 			T* v;
-			bool emptyFlag;
+			bool empty_flag;
 		public:
-			vector(int size=0)
-			{
+			vector(int size=0) {
 				length = size;
 				v = new T[length];
-				emptyFlag = true;
+				empty_flag = true;
 			}
 
-			bool empty()
-			{
-				return emptyFlag;
+			bool empty() {
+				return empty_flag;
 			}
 
-			int size()
-			{
+			int size() {
 				return length;
 			}
 			
-			T at(int pos)
-			{
+			T at(int pos) {
 				if(pos > length-1)
 					throw nullptr;
 				return v[pos];
 			}
 			
-			void clear()
-			{
+			void clear() {
 				delete[] v;
 				length = 0;
-				emptyFlag = true;
+				empty_flag = true;
 			}
 
-			T front()
-			{
+			T front() {
 				return v[0];
 			}
 
-			T back()
-			{
+			T back() {
 				return v[-1];
 			}
 
-			void pushBack(T val)
-			{
-				emptyFlag = false;
+			void push_back(T val) {
+				empty_flag = false;
 				T* temp = new T[length];
 				temp = v;
 				temp[length] = val;
@@ -66,34 +60,31 @@ namespace xb
 				v = temp;
 			}
 
-			T popBack()
-			{
+			T pop_back() {
 				if(length == 1)
-					emptyFlag = true;
-				T popVal = v[length-1];
+					empty_flag = true;
+				T pop_val = v[length-1];
 				length--;
 				T* temp = new T[length];
 				temp = v;
 				v = new T[length];
 				v = temp;
-				return popVal;
+				return pop_val;
 			}
 
-			void insert(int pos, T value)
-			{
-				emptyFlag = false;
-				T* frstHalf = new T[pos];
-				T* scndHalf = new T[length-pos];
+			void insert(int pos, T value) {
+				empty_flag = false;
+				T* frst_half = new T[pos];
+				T* scnd_half = new T[length-pos];
 				length++;
-				frstHalf = v;
+				frst_half = v;
 				T temp = v[pos];
-				scndHalf = &v[pos];
+				scnd_half = &v[pos];
 				v = new T[length];
-				v = frstHalf;
+				v = frst_half;
 				v[pos] = value;
 				T temp2;
-				for(int i=pos+1; i<length; i++)
-				{
+				for(int i=pos+1; i<length; i++) {
 					temp2 = v[i];
 					v[i] = temp;
 					temp = temp2;
@@ -101,35 +92,31 @@ namespace xb
 					// idk may be theres more efficient way
 			}
 
-			T erase(int pos)
-			{
+			T erase(int pos) {
 				if(length == 1)
-					emptyFlag == true;
-				T* frstHalf = new T[pos];
-				T* scndHalf = new T[length-pos];
-				T retVal = v[pos];
-				frstHalf = v;
-				//scndHalf = &v[pos+1];
+					empty_flag == true;
+				T* frst_half = new T[pos];
+				T* scnd_half = new T[length-pos];
+				T ret_val = v[pos];
+				frst_half = v;
+				//scnd_half = &v[pos+1];
 				length--;
 				v = new T[length];
-				v = frstHalf;
-				for(int i=pos+1; i<length+1; i++)
-				{
+				v = frst_half;
+				for(int i=pos+1; i<length+1; i++) {
 					v[i-1] = v[i];
 				}
 				//idk may be theres more efficient way
-				return retVal;
+				return ret_val;
 			}
 			
-			void assign(int n, T val)    //takes vector and assigns n items of value val
-			{
-				emptyFlag = false;
+			void assign(int n, T val) {    //takes vector and assigns n items of value val
+				empty_flag = false;
 				length = n;
 				v = new T[n];
 				for(int i=0; i<n; i++)
 					v[i] = val;
 			}
-
 	};
 
 }

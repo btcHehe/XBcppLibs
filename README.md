@@ -13,14 +13,13 @@ XBVector.h      | library containing Vector data structure
 XBQueue.h 			| library containing Queue data structure
 XBStack.h 			| library containing Stack data structure
 XBMatrix.h 			| library constaining  Matrix data structure and matrix operations
+WGraph.h            | library containing weighted graph template class
+DGraph.h            | library containing directed graph template class
 
 
 
 ## Libraries TODO
 - [ ] XBMath.h
-- [x] XBVector.h
-- [x] XBStack.h
-- [x] XBQueue.h
 - [ ] XBList.h
 - [ ] XBMatrix.h
 

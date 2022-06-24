@@ -3,8 +3,7 @@
 #ifndef XBMATH_H
 #define XBMATH_H
 
-namespace xb
-{
+namespace xb {
   //--------------------------------------------------------constants-----------------------------------------------------------------------------//
   
   #define PI 3.14159265358979323846264338327950288419716939937510
@@ -20,25 +19,21 @@ namespace xb
 
   //--------------------------------------------------------fraction structure--------------------------------------------------------------------//
 
-  struct frac
-  {
+  struct frac {
       int nom = 0;
       int denom = 0;
   };
 
-  frac makeFrac(double number)
-  {
+  frac makeFrac(double number) {
     frac f;
     bool isFrac = false;
     int denom = 1;
     double nom = number;
     
-    while(!isFrac)
-    {
+    while(!isFrac) {
       denom *= 10;
       nom *= 10;
-      if( (nom - (int)nom) == 0)
-      {
+      if( (nom - (int)nom) == 0) {
         f.denom = denom;
         f.nom = nom;
         isFrac = true;
@@ -49,8 +44,7 @@ namespace xb
 
   //------------------------------------------------------abs function----------------------------------------------------------------------------//
   
-  double abs(double number)
-  {
+  double abs(double number) {
   	if(number < 0)
   		return number + ((-2) * number);
   	else
@@ -59,30 +53,24 @@ namespace xb
   
 //---------------------------------------------------------power function-------------------------------------------------------------------------//
   
-  double pow(double base, double power)
-  {
+  double pow(double base, double power) {
   	double result = 1;
-  	if(power >= 1)
-  	{
-  		for(int i = 0 ; i < (int)power ; i++)		//we have the round part of power calculated
-  		{
+  	if(power >= 1) {
+  		for(int i = 0 ; i < (int)power ; i++) {		//we have the round part of power calculated
   			result *= base;
   		}
-  		if((int)power != power)					//now we have only floating point part of power
-      {
+  		if((int)power != power)	{				//now we have only floating point part of power
          double decimal = power - (int)power;
   			result *= pow(base , decimal );	//power - int(power) < 1 always
       }
   	}
-  	else if(power < 1 && power > 0)
-  	{
+  	else if(power < 1 && power > 0) {
   		frac f;
       f = makeFrac(power);
       result *= rt(base, f.denom);
       result = pow(result, f.nom);
   	}
-  	else if(power < 0)
-  	{
+  	else if(power < 0) {
   		result = 1/pow(base , abs(power));
   	}
    else if(power == 0)
@@ -94,38 +82,31 @@ namespace xb
 
   //------------------------------------------------------root functions--------------------------------------------------------------------------//
   
-  double rt(double n , int deg, double error)   //using Newton-Rhapson method 
-  {
+  double rt(double n , int deg, double error) {  //using Newton-Rhapson method
     double xp = 0;
     double x = n;
-    if(n>0)
-  	 {
-      do
-      {
+    if(n>0) {
+      do {
         xp = x;                                                         //previous value of approximation
         x = (1/(double)deg)*((deg-1)*xp + n/pow(x,deg-1));              //current value of our approximation
-      }
-      while(abs(xp-x)>error);                                           //stop approximating after we will pass error 
+      } while(abs(xp-x)>error);                                           //stop approximating after we will pass error 
     }
     else if(n == 0)
       x = 0;
-  	 else if(n < 0)
-    {
+  	 else if(n < 0) {
   	   throw std::invalid_argument("The argument can't be less than 0");
     }
     return x;
   }
   
-  double sqrt(double n) 				    //using Newton algorithm
-  {
+  double sqrt(double n) { 				    //using Newton algorithm
 	 if(n < 0)
 		throw std::invalid_argument("The number must be greater or equal to zero");
 	 else
 	 {
 		double y = 0;
     double x = n/2;     //estimate
-		while( y*y != n )
-		{
+		while( y*y != n ) {
 		  y = (x + n/x)/2;
       if( x == y )
         break;
@@ -140,13 +121,11 @@ namespace xb
   
   //----------------------------------------------------------------logarithm functions-----------------------------------------------------------//
   
-  double log(double argument, double base)
-  {
+  double log(double argument, double base) {
   	double result = 1;   //agbitrary number, could be anything
   	bool goodEnough = false;
   	int counter = 0;      //after some number of iterations it's close enough so we can stop and give output
-  	while(!goodEnough)
-  	{
+  	while(!goodEnough) {
   		double check = pow(base , result);
   		if(check == argument)
   			goodEnough = true;
@@ -170,8 +149,7 @@ namespace xb
   	return result;
   }
   
-  double ln(double argument)
-  {
+  double ln(double argument) {
     if(argument >= 0)
   	  return log(argument, e);
     else
@@ -180,13 +158,11 @@ namespace xb
   
   //--------------------------------------------------------Combinatorics functions---------------------------------------------------------------//
 
-  long double fact(int n)       //use recursion if you don't care about ur memory
-  {
+  long double fact(int n) {      //use recursion if you don't care about ur memory
     if(n >= 0)
     {
       long double y = 1;
-      for(long double i=1; i<n; i++)
-      {
+      for(long double i=1; i<n; i++) {
         y *= i;
       }
       return n*y;
@@ -195,8 +171,7 @@ namespace xb
       throw std::invalid_argument("The argument must be non negative");
   }
 
-  long double bicoef(unsigned long long int n, unsigned long long int k)      //binomial coefficient or nCk/nCr-on calculators
-  {
+  long double bicoef(unsigned long long int n, unsigned long long int k) {      //binomial coefficient or nCk/nCr-on calculators
     if(n >= k && k >= 0)
       return fact(n)/(fact(k) * fact(n-k));
     else

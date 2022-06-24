@@ -9,6 +9,7 @@
 #include <iostream>
 #endif
 
+namespace xb {
 template <typename T>
 void print(std::vector<T> vec) {
 	std::cout << "[";
@@ -39,6 +40,8 @@ void println(T var) {
 template <typename T>
 void print(T var) {
 	std::cout << var;
+}
+
 }
 
 #endif

@@ -13,6 +13,8 @@
 #ifndef DGRAPH_H
 #define DGRAPH_H
 
+namespace xb {
+
 template <typename V>
 class DEdge;
 template <typename V>
@@ -98,5 +100,7 @@ void DGraph<V>::add_vertex(V val) {
 template <typename V>
 void DGraph<V>::add_vertex(DVertex<V> v) {
     vertices.push_back(v);
+}
+
 }
 #endif

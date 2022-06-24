@@ -9,6 +9,7 @@
 #include <exception>
 #endif
 
+namespace xb {
 template <typename T>
 class Table {
     private:
@@ -139,4 +140,5 @@ void Table<T>::fill(T value) {
     }
 }
 
+}
 #endif

@@ -1,41 +1,33 @@
 #ifndef XBSTACK_H
 #define XBSTACK_H
 
-namespace xb
-{
+namespace xb {
 	template <typename T>
-	class stack
-	{
+	class stack {
 		private:
 			int length;
 		public:
 			T* s;
-			stack(int size=0)
-			{
+			stack(int size=0) {
 				length = size;
 				s = new T[length];
 			}
 
-			T top()
-			{
+			T top() {
 				return s[-1];
 			}
 
-			int size()
-			{
+			int size() {
 				return length;
 			}
 
-			void push(T val)
-			{
-				if(length == 0)
-				{
+			void push(T val) {
+				if(length == 0) {
 					length++;
 					s = new T[length];
 					s[-1] = val;
 				}
-				else
-				{
+				else {
 					T* temp = new T[length];
 					length++;
 					temp = s;
@@ -45,15 +37,14 @@ namespace xb
 				}
 			}
 
-			T pop()
-			{
+			T pop() {
 				length--;
 				T* temp = new T[length];
-				T retVal = s[length];
+				T ret_val = s[length];
 				temp = s;
 				s = new T[length];
 				s = temp;
-				return retVal;
+				return ret_val;
 			}
 	};
 
