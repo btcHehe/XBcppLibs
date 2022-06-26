@@ -94,11 +94,11 @@ Table(int row_num, int col_num) {
 }
 
 template <typename T>
-T Table<T>::operator[](int place) {
+T& Table<T>::operator[](int place) {
     if (place >= 0 && place < tab.size()) {
         return tab[place];
     } else if (place < 0 && place >= -tab.size()) {
-        retrun tab[tab.size()+1-place];
+        return tab[tab.size()+1-place];
     } else {
         throw std::out_of_range;
     }

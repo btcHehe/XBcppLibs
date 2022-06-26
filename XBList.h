@@ -1,9 +1,8 @@
 //Library for making two way lists
-#ifndef XBList_H
-#define XBList_H
+#ifndef XBLIST_H
+#define XBLIST_H
 
-namespace xb
-{
+namespace xb {
 	//TODO:
 	//[x] front
 	//[x] back
@@ -21,286 +20,232 @@ namespace xb
 	//[] reverse
 
   template <typename T>
-  class list
-  {
-	  struct element
-	  {
+  class list {
+	struct element {
 	  	T value;
-		  element* next;
-		  element* prev;
-		};
-	  element* lastItem;
-		element* firstItem;
-		bool emptyFlag;
-		int length = 0;
-		public:
-  	list(int size = 0)
-		{
+		element* next;
+		element* prev;
+	};
+	element* last_item;
+	element* first_item;
+	bool empty_flag;
+	int length = 0;
+	public:
+  	list(int size = 0) {
 		  length = size;
-		  if(size == 0)
-		  {
-			  emptyFlag = true;
-			  element first;
-			  first.next = 0;
-			  first.prev = 0;
-		  }
-		  else
-		  {
-				emptyFlag = false;
+		  if(size == 0) {
+				empty_flag = true;
+				element first;
+				first.next = 0;
+				first.prev = 0;
+		  } else {
+				empty_flag = false;
 				element* maker;
-		   	static element* last;               //memory remember previous last object of the list
-		    for(int i = 0 ; i < size ; i++)
-				{
-				  	maker = new element;
-	 		 	  	if(i == 0)
-			 	  	{
-				  	  maker->prev = 0;
-				  	  maker->next = 0;
-				  	  last = maker;
-			 	  	  firstItem = last;
-			 	  	}
-			 	  	else if(i == size - 1)
-			 	  	{
-				  		last->next = maker;
-			 	  		maker->prev = last;
-			 	  		maker->next = 0;
-			 	  		lastItem = maker;
-			 	  	}
-		   	  	else
-		      	{
-				  		last->next = maker;
-				  		maker->prev = last;
-		      	 	maker->next = 0;
-		      	}
-						last = maker;
-		     }
-		 		for(int i = 0 ; i < size ; i++)
-			 	{
+		   		static element* last;               //memory remember previous last object of the list
+				for(int i = 0 ; i < size ; i++) {
+					maker = new element;
+	 		 		if(i == 0) {
+					  	maker->prev = 0;
+					  	maker->next = 0;
+					  	last = maker;
+			 		  	firstItem = last;
+			 		} else if(i == size - 1) {
+					  	last->next = maker;
+			 		  	maker->prev = last;
+			 		  	maker->next = 0;
+			 		  	lastItem = maker;
+			 		} else {
+					  	last->next = maker;
+					  	maker->prev = last;
+		      		 	maker->next = 0;
+		      		}
+					last = maker;
+		    	}
+		 		for(int i = 0 ; i < size ; i++) {
 					element* ptr;
-					if(i == 0)
-					{
-					  ptr = firstItem;
+					if(i == 0) {
+					  ptr = first_item;
 					  last = ptr;
-					}
-					else
-					{
+					} else {
 					  ptr = ptr->next;
 					}
 					last = ptr;
 			 	}
-		  }
+			}
 		}
 		//-------------------------------------------------------------------------
 		
-		element front()
-		{
-			return *firstItem;
+		element front() {
+			return *first_item;
 		}
 
-		element back()
-		{
-			return *lastItem;
+		element back() {
+			return *last_item;
 		}
 
-		bool empty()
-		{
-			return emptyFlag;
+		bool empty() {
+			return empty_flag;
 		}
 
-		int size()
-		{
+		int size() {
 			return length;
 		}
 
-		void clear()
-		{
-			firstItem->next = 0;
-			lastItem->prev = 0;
+		void clear() {
+			first_item->next = 0;
+			last_item->prev = 0;
 			length = 0;
-			emptyFlag = true;
+			empty_flag = true;
 		}
 
-		void erase(int index)
-		{
+		void erase(int index) {
 			if(length == 1)
-				emptyFlag = true;
-			element* ptr = firstItem;
+				empty_flag = true;
+			element* ptr = first_item;
 			int i = 0;
-			while(i != index)
-			{
+			while(i != index) {
 				ptr = ptr->next;
 				i++;
 			}
 			ptr->value = 0;
 		}
 
-		void pushBack(T newValue)
-		{
-			if(length == 0)
-			{
-				emptyFlag = false;
-				firstItem = new element;
-				firstItem->value = newValue;
-				lastItem = firstItem;
+		void push_back(T new_value) {
+			if(length == 0) {
+				empty_flag = false;
+				first_item = new element;
+				first_item->value = new_value;
+				last_item = first_item;
 				length++;
-			}
-			else
-			{
+			} else {
 				element* maker = new element;
-		   	maker->value = newValue;
-		   	maker->next = 0;
-		   	maker->prev = lastItem;
-				lastItem->next = maker;
-		   	lastItem = maker;
-		   	length++;
+		   		maker->value = new_value;
+		   		maker->next = 0;
+		   		maker->prev = last_item;
+				last_item->next = maker;
+		   		last_item = maker;
+		   		length++;
 			}
 		}
 
-		T popBack()
-		{
+		T pop_back() {
 			if(length == 1)
-				emptyFlag = true;
-			T retVal = lastItem->value;
-			element* tmp = lastItem->prev;
-			delete lastItem;
+				empty_flag = true;
+			T ret_val = last_item->value;
+			element* tmp = last_item->prev;
+			delete last_item;
 			length--;
-			lastItem = tmp;
-			return retVal;
+			last_item = tmp;
+			return ret_val;
 		}
 
-		void pushFront(T newValue)
-		{
-			if(length == 0)
-			{
-				emptyFlag = false;
-				firstItem = new element;
-				firstItem->value = newValue;
-				lastItem = firstItem;
+		void push_front(T new_value) {
+			if(length == 0) {
+				empty_flag = false;
+				first_item = new element;
+				first_item->value = new_value;
+				last_item = first_item;
 				length++;
-			}
-			else
-			{
-		   	element* maker = new element;
-		   	maker->value = newValue;
-		   	maker->next = firstItem;
-		   	maker->prev = 0;
-		   	firstItem = maker;
-		   	length++;
+			} else {
+		   		element* maker = new element;
+		   		maker->value = new_value;
+		   		maker->next = first_item;
+		   		maker->prev = 0;
+		   		first_item = maker;
+		   		length++;
 			}
 		}
 
-		T popFront()
-		{
+		T pop_front() {
 			if(length == 1)
-				emptyFlag = true;
-			T retVal = firstItem->value;
-			firstItem = firstItem->next;
-			firstItem->prev = 0;
+				empty_flag = true;
+			T ret_val = first_item->value;
+			first_item = first_item->next;
+			first_item->prev = 0;
 			length--;
-			return retVal;
+			return ret_val;
 		}
 
-		void insert(int index, T val)   //BROKEN 
-		{
+		void insert(int index, T val) {		// BROKEN
 			length++;
-			element* ptr = firstItem;
+			element* ptr = first_item;
 			int i = 0;
-			while(i != index)
-			{
+			while(i != index) {
 				ptr = ptr->next;
 				i++;
 			}
 			element* tmp = ptr->prev;
-			element* newElem = new element;
-			newElem->value = val;
-			newElem->prev = tmp;
-			tmp->next = newElem;
-			ptr->prev = newElem;
-			newElem->next = ptr;
+			element* new_elem = new element;
+			new_elem->value = val;
+			new_elem->prev = tmp;
+			tmp->next = new_elem;
+			ptr->prev = new_elem;
+			new_elem->next = ptr;
 		}
 
-		void changeValue(int index ,T newValue)           //we start indexing from 0
-		{
-		  element* ptr = 0;
-		  if(index >= (length/2))
-		  {
-			 ptr = lastItem;
-			 for(int i = 0; i < (length - index - 1); i++)
-			 {
-				  ptr = ptr->prev;
-			 }
-		  }
-		  else
-		  {
-			 ptr = firstItem;
-			 for(int i = 0; i < index ; i++)
-			 {
-				ptr = ptr->next;
-			 }
-		  }
-		  ptr->value = newValue;
+		void change_value(int index ,T new_value) {           //we start indexing from 0
+			element* ptr = 0;
+			if(index >= (length/2)) {
+				ptr = last_item;
+				for(int i = 0; i < (length - index - 1); i++) {
+				     ptr = ptr->prev;
+				}
+			} else {
+				ptr = first_item;
+				for(int i = 0; i < index ; i++)
+				{
+				   ptr = ptr->next;
+				}
+		  	}
+		  	ptr->value = new_value;
 		}
 
 
 
 		//-----------------for development purpose only-------------------------------//
 
-		T seekValue(int index)
-		{
-		  element* watcher;
-		  int i = 0;
-		  watcher = firstItem;
-		  while(i != index)
-		  {
-				watcher = watcher->next;
-				i++;
-		  }
-		  return watcher->value;
+		T seek_value(int index) {
+			element* watcher;
+			int i = 0;
+			watcher = first_item;
+			while(i != index) {
+			  	watcher = watcher->next;
+			  	i++;
+			}
+			return watcher->value;
 		}
 
 
-		element* seekNext(int index)
-		{
-		  element* watcher;
-		  if(index >= (length/2))
-		  {
-			 watcher = lastItem;
-			 for(int i = 0; i < (length - index - 1); i++)
-			 {
-				  watcher = watcher->prev;
-			 }
-		  }
-		  else
-		  {
-			 watcher = firstItem;
-			 for(int i = 0; i < index ; i++)
-			 {
-				watcher = watcher->next;
-			 }
-		  }
-		  return watcher->next;
+		element* seek_next(int index) {
+			element* watcher;
+			if(index >= (length/2)) {
+			   watcher = last_item;
+			   for(int i = 0; i < (length - index - 1); i++) {
+			  	  watcher = watcher->prev;
+			   }
+			} else {
+			   watcher = first_item;
+			   for(int i = 0; i < index ; i++) {
+			  	watcher = watcher->next;
+			   }
+			}
+			return watcher->next;
 		}
 
-		element* seekPrev(int index)
-		{
-		  element* watcher;
-		  if(index >= (length/2))
-		  {
-			 watcher = lastItem;
-			 for(int i = 0; i < (length - index - 1); i++)
-			 {
-				  watcher = watcher->prev;
-			 }
-		  }
-		  else
-		  {
-			 watcher = firstItem;
-			 for(int i = 0; i < index ; i++)
-			 {
-				watcher = watcher->next;
-			 }
-		  }
-		  return watcher->prev;
+		element* seek_prev(int index) {
+			element* watcher;
+			if(index >= (length/2)) {
+			   watcher = last_item;
+			   for(int i = 0; i < (length - index - 1); i++) {
+			  	  watcher = watcher->prev;
+			   }
+			} else {
+			   watcher = firstItem;
+			   for(int i = 0; i < index ; i++) {
+			  	watcher = watcher->next;
+			   }
+			}
+			return watcher->prev;
 		}
 
 

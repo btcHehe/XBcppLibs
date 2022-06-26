@@ -1,25 +1,20 @@
 # XBLibs
 
 ## What is XBLibs?
-It's set of our own implementations of c++ libraries.
+It's set of our own implementations of c++ libraries. All libraries are in **xb::** namespace.
 
 ## Contents
 
-name of library |	short description
-----------------|------------
-XBMath.h				| library containing math functions and constants
-XBList.h			  | library containing List data structure
-XBVector.h      | library containing Vector data structure
-XBQueue.h 			| library containing Queue data structure
-XBStack.h 			| library containing Stack data structure
-XBMatrix.h 			| library constaining  Matrix data structure and matrix operations
-WGraph.h            | library containing weighted graph template class
-DGraph.h            | library containing directed graph template class
-
-
-
-## Libraries TODO
-- [ ] XBMath.h
-- [ ] XBList.h
-- [ ] XBMatrix.h
-
+name of library                         |	short description                                               | status
+----------------------------------------|-------------------------------------------------------------------|------------------------
+XBMath.h		                        | library containing math functions and constants                   | WIP  
+XBList.h		                        | library containing two-way linked list template class             | WIP
+[XBVector.h](./docs/XBVector.md)        | library containing Vector template class                          | finished
+[XBQueue.h](./docs/XBQueue.md) 		    | library containing Queue template class                           | finished
+[XBStack.h](./docs/XBStack.md) 		    | library containing Stack template class                           | finished
+XBMatrix.h 		                        | library constaining  Matrix data structure and matrix operations  | WIP
+[WGraph.h](./docs/WGraph.md)            | library containing weighted graph template class                  | finished
+[DGraph.h](./docs/DGraph.md)            | library containing directed graph template class                  | finished
+Table.h                                 | library containing table template class                           | WIP
+XBRandom.h                              | library for random number generation                              | WIP
+XBIO.h                                  | library for easier IO operations                                  | WIP

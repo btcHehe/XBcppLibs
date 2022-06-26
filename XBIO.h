@@ -1,6 +1,3 @@
-#ifndef CUSTOMIO_H
-#define CUSTOMIO_H
-
 #ifndef _VECTOR_
 #include <vector>
 #endif
@@ -8,6 +5,9 @@
 #ifndef _IOSTREAM_
 #include <iostream>
 #endif
+
+#ifndef	XBIO_H
+#define XBIO_H
 
 namespace xb {
 template <typename T>

@@ -1,3 +1,6 @@
+#ifndef XBRANDOM_H
+#define XBRANDOM_H
+
 namespace xb {
 //------------------------------------linear congruential generator-------------------------------//
 //generates squence of integers between 0 and m-1 by relation I[j+1] = a*I[j] + c % m
@@ -5,7 +8,7 @@ namespace xb {
 	#define a 16807
 	#define c 2137
 	
-	unsigned long nextNum = 1;
+	unsigned long next_num = 1;
 	
 	int cong_rand() {
 		next_num = next_num * a + c;
@@ -13,7 +16,7 @@ namespace xb {
 	}
 	
 	void seed_cong_rand(unsigned int seed) {
-		nextNum = seed;
+		next_num = seed;
 	}
 
 //----------------------------------Minimal Standard-Park/Miller ran0-----------------------------//
@@ -40,3 +43,4 @@ namespace xb {
 
 }
 
+#endif

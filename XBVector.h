@@ -1,25 +1,33 @@
-//Library for making vector data structre
-#ifndef XBVector_H
-#define XBVector_H
-
 #ifndef _INITIALIZER_LIST_
 #include <initializer_list>
 #endif
+
+//Library for making vector data structre
+#ifndef XBVECTOR_H
+#define XBVECTOR_H
 
 namespace xb {
 
 	template<typename T>
 
-	class vector {
+	class Vector {
 		private:
 			int length;
 			T* v;
 			bool empty_flag;
 		public:
-			vector(int size=0) {
+			Vector() {}
+			Vector(int size) {
 				length = size;
 				v = new T[length];
 				empty_flag = true;
+			}
+			Vector(std::initializer_list<T> init_list) {
+				length = init_list.size();
+				v = new T[length];
+				for (int i = 0; i < length; i++) {
+					v[i] = init_list[i];
+				}
 			}
 
 			bool empty() {
@@ -34,6 +42,16 @@ namespace xb {
 				if(pos > length-1)
 					throw nullptr;
 				return v[pos];
+			}
+			
+			T& operator[](int place) {
+    			if (place >= 0 && place < length()) {
+    			    return v[place];
+    			} else if (place < 0 && place >= -length()) {
+    			    return v[length+1-place];
+    			} else {
+    			    throw std::out_of_range;
+    			}
 			}
 			
 			void clear() {

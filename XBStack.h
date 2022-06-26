@@ -1,16 +1,31 @@
+#ifndef _INITIALIZER_LIST_
+#include <initializer_list>
+#endif
+
+#ifndef _VECTOR_
+#include <vector>
+#endif
+
 #ifndef XBSTACK_H
 #define XBSTACK_H
 
 namespace xb {
 	template <typename T>
-	class stack {
+	class Stack {
 		private:
 			int length;
+			std::vector<T> s;
 		public:
-			T* s;
-			stack(int size=0) {
+			Stack() {}
+			Stack(int size) {
 				length = size;
-				s = new T[length];
+				s = std::vector(length);
+			}
+			Stack(std::initializer_list<T> init_list) {
+				length = init_list.size();
+				for(auto elem : init_list) {
+					s.push_back(elem);
+				}
 			}
 
 			T top() {
@@ -22,28 +37,14 @@ namespace xb {
 			}
 
 			void push(T val) {
-				if(length == 0) {
-					length++;
-					s = new T[length];
-					s[-1] = val;
-				}
-				else {
-					T* temp = new T[length];
-					length++;
-					temp = s;
-					s = new T[length];
-					s = temp;
-					s[length-1] = val;
-				}
+				length++;
+				s.push_back(val);
 			}
 
 			T pop() {
+				T ret_val = s[-1];
+				s.pop_back();
 				length--;
-				T* temp = new T[length];
-				T ret_val = s[length];
-				temp = s;
-				s = new T[length];
-				s = temp;
 				return ret_val;
 			}
 	};

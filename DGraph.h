@@ -44,7 +44,6 @@ public:
     std::vector<DVertex<V>> vertices;
     void add_vertex(V val);
     void add_vertex(DVertex<V> v);
-
 };
 
 template <typename V>

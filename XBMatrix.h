@@ -1,6 +1,3 @@
-#ifndef XBMatrix_H
-#define XBMatrix_H
-
 #ifndef _IOSTREAM_
 #include <iostream>
 #endif
@@ -8,6 +5,10 @@
 #ifndef _STD_EXCEPT_
 #include <stdexcept>
 #endif
+
+#ifndef XBMATRIX_H
+#define XBMATRIX_H
+
 //indexing starts from 0 so element [0][0] is the element in the left upper row of the matrix
 
 namespace xb {

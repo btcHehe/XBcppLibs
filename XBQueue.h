@@ -1,17 +1,32 @@
-#ifndef XBQueue_H
-#define XBQueue_H
+#ifndef _INITIALIZER_LIST_
+#include <initializer_list>
+#endif
+
+#ifndef _VECTOR_
+#include <vector>
+#endif
+
+#ifndef XBQUEUE_H
+#define XBQUEUE_H
 
 namespace xb {
 	template<typename T>
-
-	class queue {
+	class Queue {
 		private:
 			int length;
-			T* q;
+			std::vector<T> q;
 		public:
-			queue(int size=0) {
+			Queue() {}
+			Queue(int size) {
 				length = size;
-				q = new T[length];
+				q = std::vector<T>(length);
+			}
+			Queue(std::initializer_list<T> init_list) {
+				length = init_list.size();
+				q = std::vector<T>(length);
+				for(int i = 0; i < length; i++) {
+					q[i] = init_list[i];
+				}
 			}
 
 			int size() {
@@ -27,21 +42,13 @@ namespace xb {
 			}
 
 			void push(T val) {
-				T* temp = new T[length];
+				q.push_back(val);
 				length++;
-				temp = q;
-				q = new T[length];
-				q = temp;
-				q[length-1] = val;
 			}
 
 			T pop() {
-				T ret_val = q[0];
-				length--;
-				T* temp = new T[length];
-				temp = &q[1];
-				q = new T[length];
-				q = temp;
+				T ret_val = q.front();
+				q.erase(q.begin());
 				return ret_val;
 			}
 

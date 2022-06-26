@@ -20,23 +20,23 @@ namespace xb {
   //--------------------------------------------------------fraction structure--------------------------------------------------------------------//
 
   struct frac {
-      int nom = 0;
-      int denom = 0;
+    int num = 0;
+    int denom = 0;
   };
 
-  frac makeFrac(double number) {
+  frac make_frac(double number) {
     frac f;
-    bool isFrac = false;
+    bool is_frac = false;
     int denom = 1;
-    double nom = number;
+    double num = number;
     
-    while(!isFrac) {
+    while(!is_frac) {
       denom *= 10;
-      nom *= 10;
-      if( (nom - (int)nom) == 0) {
+      num *= 10;
+      if( (num - (int)num) == 0) {
         f.denom = denom;
-        f.nom = nom;
-        isFrac = true;
+        f.nom = num;
+        is_frac = true;
       }
     }
     return f;
@@ -66,7 +66,7 @@ namespace xb {
   	}
   	else if(power < 1 && power > 0) {
   		frac f;
-      f = makeFrac(power);
+      f = make_frac(power);
       result *= rt(base, f.denom);
       result = pow(result, f.nom);
   	}
@@ -100,10 +100,9 @@ namespace xb {
   }
   
   double sqrt(double n) { 				    //using Newton algorithm
-	 if(n < 0)
+	 if(n < 0) {
 		throw std::invalid_argument("The number must be greater or equal to zero");
-	 else
-	 {
+   } else {
 		double y = 0;
     double x = n/2;     //estimate
 		while( y*y != n ) {
@@ -123,12 +122,12 @@ namespace xb {
   
   double log(double argument, double base) {
   	double result = 1;   //agbitrary number, could be anything
-  	bool goodEnough = false;
+  	bool good_enough = false;
   	int counter = 0;      //after some number of iterations it's close enough so we can stop and give output
-  	while(!goodEnough) {
+  	while(!good_enough) {
   		double check = pow(base , result);
   		if(check == argument)
-  			goodEnough = true;
+  			good_enough = true;
   
   		else if(check < argument)
   			if(argument - check < 1)
@@ -143,7 +142,7 @@ namespace xb {
   				result -= 1;
   
   		if(counter >= 10 * argument)  //not sure about this if statement
-  			goodEnough = true;
+  			good_enough = true;
   		counter++;
   	}
   	return result;
