@@ -2,11 +2,13 @@
 
 ## Description
 Library contains 3 template classes: WGraph<V, E>, WVertex<V>, WEdge<E> for creating weighted graphs. Graph has a field called vertices which is a vector containing WVertex<V> type objects, every vertex has a field called edges which is a vector containing all WEdge<E> type objects connected to this vertex. Adding edge to one of the vertices automatically adds same edge to the vertex on the other side. For moving around in the graph there is a helper type **WHead**. The example of usage:
-```
+```cpp
 xb::WGraph<vertex_t, edge_t> my_graph = { 1, 2, 5, 10, 56, 12 };
-WHead<vertex_t> reader = my_graph.vertices[0].edges[0].vertex;      // reader points to the first neighbour of the first vertex in a graph
+// reader points to the first neighbour of the first vertex in a graph
+WHead<vertex_t> reader = my_graph.vertices[0].edges[0].vertex; 
 std::cout << reader->value << std::endl;
-reader = reader->edges[1].vertex;        // reader points to the first neighbour of vertex it was pointing to previously
+// reader points to the first neighbour of vertex it was pointing to previously
+reader = reader->edges[1].vertex;
 std::cout << reader->value << std::endl;
 ```
 
