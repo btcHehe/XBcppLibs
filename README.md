@@ -15,6 +15,5 @@ XBList.h		                        | library containing two-way linked list templ
 XBMatrix.h 		                        | library constaining  Matrix data structure and matrix operations  | WIP
 [WGraph.h](./docs/WGraph.md)            | library containing weighted graph template class                  | finished
 [DGraph.h](./docs/DGraph.md)            | library containing directed graph template class                  | finished
-Table.h                                 | library containing table template class                           | WIP
 XBRandom.h                              | library for random number generation                              | WIP
 XBIO.h                                  | library for easier IO operations                                  | WIP
