@@ -35,7 +35,7 @@ namespace xb {
       num *= 10;
       if( (num - (int)num) == 0) {
         f.denom = denom;
-        f.nom = num;
+        f.num = num;
         is_frac = true;
       }
     }
@@ -68,7 +68,7 @@ namespace xb {
   		frac f;
       f = make_frac(power);
       result *= rt(base, f.denom);
-      result = pow(result, f.nom);
+      result = pow(result, f.num);
   	}
   	else if(power < 0) {
   		result = 1/pow(base , abs(power));
@@ -177,6 +177,65 @@ namespace xb {
       throw std::invalid_argument("The arguments must meet the requirement: n>=k and k>=0");
   }
   
+
+  //--------------------------------------------------------Trigonometric functions---------------------------------------------------------------//
+  long double sin(double x) {
+    // using Taylor series expansion around 0 (MSE~=2.156e-6 in [-PI; PI])
+    int n = 9;                        // n-th element in Taylor series expansion
+    if(x > PI) {                      // wrapping x around to [-PI; PI] interval
+      while(abs(x) > PI) {
+        x -= 2*PI;
+      }
+    } else if(x < -PI) {
+      while(abs(x) > PI) {
+        x += 2*PI;
+      }
+    }
+    long double den = 1;
+    long double ret = x;              // the expansion: x - pow(x, 3)/fact(3) + pow(x,5)/fact(5) - pow(x,7)/fact(7) + pow(x,9)/fact(9);
+    long double num = ret;
+    int p=0;
+    for (int i=3; i<n; i+=2) {        // optimized calculation of expansion
+      p += 1;
+      den *= (i-1)*i;
+      num *= x*x;
+      ret += num*pow(-1,p)/den;
+    }
+    return ret;
+  }
+
+  long double cos(double x) {
+    // using Taylor series expansion around 0 (MSE~=1.384e-7 in [-PI; PI])
+    int n = 10;                       // n-th element in Taylor series expansion
+    if(x > PI) {                      // wrapping x around to [-PI; PI] interval
+      while(abs(x) > PI) {
+        x -= 2*PI;
+      }
+    } else if(x < -PI) {
+      while(abs(x) > PI) {
+        x += 2*PI;
+      }
+    }
+    long double den = 1;
+    long double ret = 1;              // the expansion: 1 - pow(x, 2)/fact(2) + pow(x,4)/fact(4) - pow(x,6)/fact(6) + pow(x,8)/fact(8) - pow(x,10)/fact(10);
+    long double num = ret;
+    int p=0;
+    for (int i=2; i<n; i+=2) {        // optimized calculation of expansion
+      p += 1;
+      den *= (i-1)*i;
+      num *= x*x;
+      ret += num*pow(-1,p)/den;
+    }
+    return ret;
+  }
+
+  long double tan(double x) {
+    return sin(x)/cos(x);
+  }
+
+  long double atan(double x) {
+    return cos(x)/sin(x);
+  }
 
 }
 
