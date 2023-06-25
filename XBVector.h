@@ -32,6 +32,10 @@ namespace xb {
 		public:
 			Vector() {}
 
+			~Vector() {
+				delete [] v;
+			}
+
 			Vector(int size) {
 				length = size;
 				capacity = size + (int)(size/2);
@@ -152,6 +156,18 @@ namespace xb {
 				v = new T[capacity];
 				for(int i=0; i<n; i++)
 					v[i] = val;
+			}
+
+			void shrink_to_size() {			//shrinks underlying array to minimum allocated size
+				if (length < capacity) {
+					capacity = length;
+					T* tmp = new T[capacity];
+					for (int i=0; i<length; i++) {
+						tmp[i] = v[i];
+					}
+					delete [] v;
+					v = tmp;
+				}
 			}
 	};
 
