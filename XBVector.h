@@ -12,19 +12,22 @@ namespace xb {
 
 	class Vector {
 		private:
-			int length;
+			int length;				// amount of elements in v
+			int capacity;			// amount of cells reserved for v
 			T* v;
 			bool empty_flag;
 		public:
 			Vector() {}
 			Vector(int size) {
 				length = size;
-				v = new T[length];
+				capacity = size + (int)(size/2);
+				v = new T[capacity];
 				empty_flag = true;
 			}
 			Vector(std::initializer_list<T> init_list) {
 				length = init_list.size();
-				v = new T[length];
+				capacity = init_list.size() + (int)(init_list.size/2);
+				v = new T[capacity];
 				for (int i = 0; i < length; i++) {
 					v[i] = init_list[i];
 				}
@@ -39,9 +42,13 @@ namespace xb {
 			}
 			
 			T at(int pos) {
-				if(pos > length-1)
-					throw nullptr;
-				return v[pos];
+    			if (place >= 0 && place < length()) {
+    			    return v[place];
+    			} else if (place < 0 && place >= -length()) {
+    			    return v[length+1-place];
+    			} else {
+    			    throw std::out_of_range;
+    			}
 			}
 			
 			T& operator[](int place) {
@@ -70,12 +77,20 @@ namespace xb {
 
 			void push_back(T val) {
 				empty_flag = false;
-				T* temp = new T[length];
-				temp = v;
-				temp[length] = val;
-				length++;
-				v = new T[length];
-				v = temp;
+				if (length == capacity-1) {
+					capacity = length*2;
+					T* temp = new T[capacity];
+					for (int i=0; i<length; i++) {
+						temp[i] = v[i];
+					}
+					delete [] v;
+					temp[length] = val;
+					length++;
+					v = temp;
+				} else {
+					length++;
+					v[length-1] = val;
+				}
 			}
 
 			T pop_back() {
@@ -83,10 +98,6 @@ namespace xb {
 					empty_flag = true;
 				T pop_val = v[length-1];
 				length--;
-				T* temp = new T[length];
-				temp = v;
-				v = new T[length];
-				v = temp;
 				return pop_val;
 			}
 

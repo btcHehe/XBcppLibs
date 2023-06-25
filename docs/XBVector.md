@@ -13,9 +13,9 @@ Method name | Arguments | Return type   | Description
 ------------|-----------|---------------|-------------
 empty       | -         | bool          | Returns the status of emptiness of the vector object
 size        | -         | int           | Returns number of the elements in the vector
-at          | int pos   | T             | Returns value of the element stored in the vector at the **pos** position
-operator [] | int place | T*            | Returns element stored in the vector at the **pos** position
-clear       | -         |   void        |  Clears the whole vector and sets it's **length** to 0
+at          | int pos   | T             | Returns value of the element stored in the vector at the **pos** position (checks if indexing is right)
+operator [] | int place | T*            | Returns element stored in the vector at the **pos** position (checks if the indexing is right)
+clear       | -         |   void        | Clears the whole vector and sets it's **length** to 0
 front       | -         | T             | Returns first element of the vector
 back        | -         | T             | Returns last element of the vector
 push_back   | T val     | void          | Adds new object to the end of the vector
