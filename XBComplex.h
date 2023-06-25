@@ -42,12 +42,17 @@ namespace xb {
             T Im();
             double abs();
             double module();
+            double arg();
+            double angle();
             Complex<T> conj();
             Complex<T> inv();
             Complex<T> operator*(const Complex<T> b);
+            Complex<T> operator/(const Complex<T> b);
             Complex<T> operator+(const Complex<T> b);
             Complex<T> operator-(const Complex<T> b);
             Complex<T> operator=(const Complex<T> b);
+            Complex<T> rt(int n);
+            Complex<T> pow(int n);
 
     };
 
@@ -71,6 +76,16 @@ namespace xb {
     double Complex<T>::module() {
         return this->abs();
     }
+    
+    template <typename T>
+    double Complex<T>::arg() {
+        return acos(real/this->abs());
+    }
+    
+    template <typename T>
+    double Complex<T>::angle() {
+        return this->arg();
+    }
 
     template <typename T>
     Complex<T> Complex<T>::conj() {
@@ -86,7 +101,18 @@ namespace xb {
 
     template <typename T>
     Complex<T> Complex<T>::operator*(const Complex<T> b) {
-        return Complex<T>(real*b.Re() - imag*b.Im(), real*b.Im() + b.real()*imag);
+        return Complex<T>(
+            real*b.Re() - imag*b.Im(),
+            real*b.Im() + b.real()*imag
+            );
+    }
+
+    template <typename T>
+    Complex<T> Complex<T>::operator/(const Complex<T> b) {
+        return Complex<T>(
+            (real*b.Re() + imag*b.Im())/(b.Re()*b.Re() + b.Im()*b.Im()),
+            (imag*b.Re() - real*b.Im())/(b.Re()*b.Re() + b.Im()*b.Im())
+            );
     }
 
     template <typename T>
@@ -105,6 +131,21 @@ namespace xb {
         imag = b.Im();
     }
 
+    template <typename T>
+    Complex<T> Complex<T>::rt(int n) {
+        return Complex<T>(
+            pow(this->abs(), 1/n)*cos(this->arg()/n),
+            pow(this->abs(), 1/n)*sin(this->arg()/n)
+            );
+    }
+
+    template <typename T>
+    Complex<T> Complex<T>::pow(int n) {
+        return Complex<T>(
+            pow(this->abs(), n)*cos(n*this->arg()),
+            pow(this->abs(), n)*sin(n*this->arg())
+        );
+    }
 }
 
 #endif
