@@ -16,14 +16,29 @@ namespace xb {
 			int capacity;			// amount of cells reserved for v
 			T* v;
 			bool empty_flag;
+
+			_allocv(int size) {
+				if (size > capacity) {
+					capacity = size;
+					T* tmp = new T[size];
+					for (int i=0; i<length; i++) {
+						tmp[i] = v[i];
+					}
+					delete [] v;
+					v = tmp;
+				}
+			}
+
 		public:
 			Vector() {}
+
 			Vector(int size) {
 				length = size;
 				capacity = size + (int)(size/2);
 				v = new T[capacity];
 				empty_flag = true;
 			}
+
 			Vector(std::initializer_list<T> init_list) {
 				length = init_list.size();
 				capacity = init_list.size() + (int)(init_list.size/2);
@@ -78,18 +93,13 @@ namespace xb {
 			void push_back(T val) {
 				empty_flag = false;
 				if (length == capacity-1) {
-					capacity = length*2;
-					T* temp = new T[capacity];
-					for (int i=0; i<length; i++) {
-						temp[i] = v[i];
-					}
-					delete [] v;
+					this->_allocv(length*2);
 					temp[length] = val;
 					length++;
 					v = temp;
 				} else {
+					v[length] = val;
 					length++;
-					v[length-1] = val;
 				}
 			}
 
@@ -103,46 +113,43 @@ namespace xb {
 
 			void insert(int pos, T value) {
 				empty_flag = false;
-				T* frst_half = new T[pos];
-				T* scnd_half = new T[length-pos];
-				length++;
-				frst_half = v;
-				T temp = v[pos];
-				scnd_half = &v[pos];
-				v = new T[length];
-				v = frst_half;
-				v[pos] = value;
-				T temp2;
-				for(int i=pos+1; i<length; i++) {
-					temp2 = v[i];
-					v[i] = temp;
-					temp = temp2;
+				if (pos > length) {
+					throw std::out_of_range;
+				} else if (pos == length) {
+					this->push_back(value);
+				} else if (length+1 == capacity) {
+					this->_allocv(length*2);
+					for (int i = length-1; i >= pos; i--) {
+						v[i+1] = v[i];
+					}
+					v[pos] = value;
+					length++;
+				} else {
+					for (int i = length-1; i >= pos; i--) {
+						v[i+1] = v[i];
+					}
+					v[pos] = value;
+					length++;
 				}
-					// idk may be theres more efficient way
 			}
 
 			T erase(int pos) {
 				if(length == 1)
 					empty_flag == true;
-				T* frst_half = new T[pos];
-				T* scnd_half = new T[length-pos];
-				T ret_val = v[pos];
-				frst_half = v;
-				//scnd_half = &v[pos+1];
-				length--;
-				v = new T[length];
-				v = frst_half;
-				for(int i=pos+1; i<length+1; i++) {
-					v[i-1] = v[i];
+				ret_val = v[pos];
+				for (int i = pos; i < length-1; i++) {
+					v[i+1] = v[i];
 				}
-				//idk may be theres more efficient way
+				length--;
 				return ret_val;
 			}
 			
 			void assign(int n, T val) {    //takes vector and assigns n items of value val
 				empty_flag = false;
+				delete [] v;
 				length = n;
-				v = new T[n];
+				capacity = n;
+				v = new T[capacity];
 				for(int i=0; i<n; i++)
 					v[i] = val;
 			}
