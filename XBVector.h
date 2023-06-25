@@ -2,6 +2,10 @@
 #include <initializer_list>
 #endif
 
+#ifndef _EXCEPTION_
+#include <exception>
+#endif
+
 //Library for making vector data structre
 #ifndef XBVECTOR_H
 #define XBVECTOR_H
