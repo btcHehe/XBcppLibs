@@ -30,6 +30,7 @@ class Matrix {
         Matrix<T> mul_each(const Matrix<T> arg1, const Matrix<T> arg2);
         int row_num();
         int col_num(); 
+        std::vector<int> size();
         void add_row(Matrix<T> row);
         void add_col(Matrix<T> col);
         void add_row(std::vector<T> row);
@@ -255,7 +256,7 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> tab) {
         }
         return ret;
     } else {
-        throw std::length_error("Matrixs must have equal dimensions");
+        throw std::length_error("Matrices must have equal dimensions");
     }
 }
 
@@ -311,6 +312,12 @@ int Matrix<T>::row_num() {
 template <typename T>
 int Matrix<T>::col_num() {
     return this->tab[0].size();
+}
+
+template <typename T>       
+std::vector<int> Matrix<T>::size() {
+    std::vector<int> v = {this->row_num(), this->col_num()};
+    return v;
 }
 
 template <typename T>
