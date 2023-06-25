@@ -5,17 +5,11 @@
 
 namespace xb {
   //--------------------------------------------------------constants-----------------------------------------------------------------------------//
-  
+
   #define PI 3.14159265358979323846264338327950288419716939937510
   #define e 2.71828182845904523536028747135266249775724709369995
   
   const double pi = PI;
- 
-  //--------------------------------------------------------function declarations-----------------------------------------------------------------//
-
-
-  double rt(double n , int deg, double error = 0.00000000000000000001);
-
 
   //--------------------------------------------------------fraction structure--------------------------------------------------------------------//
 
@@ -24,6 +18,24 @@ namespace xb {
     int denom = 0;
   };
 
+  //--------------------------------------------------------function declarations-----------------------------------------------------------------//
+
+  frac make_frac(double number);
+  double abs(double number);
+  double pow(double base, double power);
+  double rt(double n , int deg, double error = 0.00000000000000000001);
+  double sqrt(double n); 				    //using Newton algorithm
+  double log(double argument, double base);
+  double ln(double argument);
+  long double fact(int n);      //use recursion if you don't care about ur memory
+  long double bicoef(unsigned long long int n, unsigned long long int k);      //binomial coefficient or nCk/nCr-on calculators
+  long double sin(double x);
+  long double cos(double x);
+  long double tan(double x);
+  long double atan(double x);
+
+  //--------------------------------------------------------fraction functions--------------------------------------------------------------------//
+  
   frac make_frac(double number) {
     frac f;
     bool is_frac = false;
@@ -60,7 +72,7 @@ namespace xb {
   			result *= base;
   		}
   		if((int)power != power)	{				//now we have only floating point part of power
-         double decimal = power - (int)power;
+        double decimal = power - (int)power;
   			result *= pow(base , decimal );	//power - int(power) < 1 always
       }
   	}
@@ -73,12 +85,16 @@ namespace xb {
   	else if(power < 0) {
   		result = 1/pow(base , abs(power));
   	}
-   else if(power == 0)
+    else if(power == 0)
      result = 1;
   
   	return result;
   }
 
+  double exp(double power) {
+    double ret = pow(e, power);
+    return ret;
+  }
 
   //------------------------------------------------------root functions--------------------------------------------------------------------------//
   
@@ -89,7 +105,7 @@ namespace xb {
       do {
         xp = x;                                                         //previous value of approximation
         x = (1/(double)deg)*((deg-1)*xp + n/pow(x,deg-1));              //current value of our approximation
-      } while(abs(xp-x)>error);                                           //stop approximating after we will pass error 
+      } while(abs(xp-x)>error);                                         //stop approximating after we will pass error 
     }
     else if(n == 0)
       x = 0;
@@ -115,8 +131,6 @@ namespace xb {
 	 }
 	 return -1;
   }
-  
-    
   
   //----------------------------------------------------------------logarithm functions-----------------------------------------------------------//
   
