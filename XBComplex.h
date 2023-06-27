@@ -24,7 +24,7 @@ namespace xb {
             T real;
             T imag;
         public:
-			Complex(T re, T im) {
+			Complex(T re=0, T im=0) {
                 real = re;
                 imag = im;
 			}
@@ -38,12 +38,12 @@ namespace xb {
                 }
 			}
 
-            T Re();
-            T Im();
-            double abs();
-            double module();
-            double arg();
-            double angle();
+            T& Re();
+            T& Im();
+            T abs();
+            T magnitude();
+            T arg();
+            T angle();
             Complex<T> conj();
             Complex<T> inv();
             Complex<T> operator*(const Complex<T> b);
@@ -51,6 +51,11 @@ namespace xb {
             Complex<T> operator+(const Complex<T> b);
             Complex<T> operator-(const Complex<T> b);
             Complex<T> operator=(const Complex<T> b);
+            Complex<T> operator*(const T b);
+            Complex<T> operator/(const T b);
+            Complex<T> operator+(const T b);
+            Complex<T> operator-(const T b);
+            Complex<T> operator=(const T b);
             Complex<T> rt(int n);
             Complex<T> pow(int n);
 
@@ -58,32 +63,32 @@ namespace xb {
 
 
     template <typename T>
-    T Complex<T>::Re() {
+    T& Complex<T>::Re() {
         return real;
     }
 
     template <typename T>
-    T Complex<T>::Im() {
+    T& Complex<T>::Im() {
         return imag;
     }
 
     template <typename T>
-    double Complex<T>::abs() {
+    T Complex<T>::abs() {
         return sqrt(real*real + imag*imag);
     }
 
     template <typename T>
-    double Complex<T>::module() {
+    T Complex<T>::magnitude() {
         return this->abs();
     }
     
     template <typename T>
-    double Complex<T>::arg() {
+    T Complex<T>::arg() {
         return acos(real/this->abs());
     }
     
     template <typename T>
-    double Complex<T>::angle() {
+    T Complex<T>::angle() {
         return this->arg();
     }
 
@@ -129,6 +134,31 @@ namespace xb {
     Complex<T> Complex<T>::operator=(const Complex<T> b) {
         real = b.Re();
         imag = b.Im();
+    }
+
+    template <typename T>
+    Complex<T> Complex<T>::operator*(const T b) {
+        return Complex<T>(real*b, imag*b);
+    }
+
+    template <typename T>
+    Complex<T> Complex<T>::operator/(const T b) {
+        return Complex<T>(real/b, imag/b);
+    }
+
+    template <typename T>
+    Complex<T> Complex<T>::operator+(const T b) {
+        return Complex<T>::(real+b, imag);
+    }
+
+    template <typename T>
+    Complex<T> Complex<T>::operator-(const T b) {
+        return Complex<T>(real-b, imag);
+    }
+
+    template <typename T>
+    Complex<T> Complex<T>::operator=(const T b) {
+        return Complex<T>(b, 0);
     }
 
     template <typename T>
