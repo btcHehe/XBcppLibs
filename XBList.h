@@ -1,256 +1,277 @@
-//Library for making two way lists
-#ifndef XBLIST_H
-#define XBLIST_H
+#pragma once
+#include <iostream>
+#include <memory>
 
-namespace xb {
-	//TODO:
-	//[x] front
-	//[x] back
-	//[x] empty
-	//[x] size
-	//[x] clear
-	//[] insert
-	//[] erase
-	//[x] push_back
-	//[x] pop_back
-	//[x] push_front
-	//[x] pop_front
-	//[] resize
-	//[] swap
-	//[] reverse
-
-  template <typename T>
-  class list {
-	struct element {
-	  	T value;
-		element* next;
-		element* prev;
-	};
-	element* last_item;
-	element* first_item;
-	bool empty_flag;
-	int length = 0;
+namespace xb
+{
+	template<typename T>
+	class Node
+	{
 	public:
-  	list(int size = 0) {
-		  length = size;
-		  if(size == 0) {
-				empty_flag = true;
-				element first;
-				first.next = 0;
-				first.prev = 0;
-		  } else {
-				empty_flag = false;
-				element* maker;
-		   		static element* last;               //memory remember previous last object of the list
-				for(int i = 0 ; i < size ; i++) {
-					maker = new element;
-	 		 		if(i == 0) {
-					  	maker->prev = 0;
-					  	maker->next = 0;
-					  	last = maker;
-			 		  	firstItem = last;
-			 		} else if(i == size - 1) {
-					  	last->next = maker;
-			 		  	maker->prev = last;
-			 		  	maker->next = 0;
-			 		  	lastItem = maker;
-			 		} else {
-					  	last->next = maker;
-					  	maker->prev = last;
-		      		 	maker->next = 0;
-		      		}
-					last = maker;
-		    	}
-		 		for(int i = 0 ; i < size ; i++) {
-					element* ptr;
-					if(i == 0) {
-					  ptr = first_item;
-					  last = ptr;
-					} else {
-					  ptr = ptr->next;
-					}
-					last = ptr;
-			 	}
+		T value;
+		std::shared_ptr<Node<T>> nextNode;
+		std::shared_ptr<Node<T>> prvNode;
+
+		Node(const T& value) : value(value), nextNode(nullptr), prvNode(nullptr) {}
+	};
+
+	template<typename T>
+	class XBList
+	{
+	private:
+		std::shared_ptr<Node<T>> _head;
+		std::shared_ptr<Node<T>> _tail;
+
+	public:
+
+		XBList() : _head(nullptr), _tail(nullptr) {}
+
+		void push_front(const T& value)
+		{
+			std::shared_ptr<Node<T>> newElement = std::make_shared<Node<T>>(value);
+
+			if (!_head)
+			{
+				_head = newElement;
+				_tail = _head;
+			}
+			else
+			{
+				newElement->nextNode = _head;
+				newElement->prvNode = nullptr;
+				_head = newElement;
+			}
+
+		}
+		void push_back(const T& value)
+		{
+			std::shared_ptr<Node<T>> newElement = std::make_shared<Node<T>>(value);
+
+			if (!_tail)
+			{
+				_tail = newElement;
+				_head = _tail;
+			}
+			else
+			{
+				_tail->nextNode = newElement;
+				newElement->prvNode = _tail;
+				_tail = newElement;
 			}
 		}
-		//-------------------------------------------------------------------------
-		
-		element front() {
-			return *first_item;
-		}
-
-		element back() {
-			return *last_item;
-		}
-
-		bool empty() {
-			return empty_flag;
-		}
-
-		int size() {
-			return length;
-		}
-
-		void clear() {
-			first_item->next = 0;
-			last_item->prev = 0;
-			length = 0;
-			empty_flag = true;
-		}
-
-		void erase(int index) {
-			if(length == 1)
-				empty_flag = true;
-			element* ptr = first_item;
-			int i = 0;
-			while(i != index) {
-				ptr = ptr->next;
-				i++;
+		bool check_exist(const T& value)
+		{
+			std::shared_ptr<Node<T>> iterator = _head;
+			while (iterator != nullptr)
+			{
+				if (iterator->value == value)
+					return true;
+				iterator = iterator->nextNode;
 			}
-			ptr->value = 0;
+			return false;
 		}
+		void print_forward() const
+		{
+			std::shared_ptr<Node<T>> iterator = _head;
 
-		void push_back(T new_value) {
-			if(length == 0) {
-				empty_flag = false;
-				first_item = new element;
-				first_item->value = new_value;
-				last_item = first_item;
-				length++;
-			} else {
-				element* maker = new element;
-		   		maker->value = new_value;
-		   		maker->next = 0;
-		   		maker->prev = last_item;
-				last_item->next = maker;
-		   		last_item = maker;
-		   		length++;
+			while (iterator != nullptr)
+			{
+				std::cout << iterator->value << " ";
+				iterator = iterator->nextNode;
 			}
 		}
+		void print_backward() const
+		{
+			std::shared_ptr<Node<T>> iterator = _tail;
 
-		T pop_back() {
-			if(length == 1)
-				empty_flag = true;
-			T ret_val = last_item->value;
-			element* tmp = last_item->prev;
-			delete last_item;
-			length--;
-			last_item = tmp;
-			return ret_val;
-		}
-
-		void push_front(T new_value) {
-			if(length == 0) {
-				empty_flag = false;
-				first_item = new element;
-				first_item->value = new_value;
-				last_item = first_item;
-				length++;
-			} else {
-		   		element* maker = new element;
-		   		maker->value = new_value;
-		   		maker->next = first_item;
-		   		maker->prev = 0;
-		   		first_item = maker;
-		   		length++;
+			while (iterator != nullptr)
+			{
+				std::cout << iterator->value << " ";
+				iterator = iterator->prvNode;
 			}
 		}
+		void rm_elem(const T& value)
+		{
+			if (!_head)
+				return;
 
-		T pop_front() {
-			if(length == 1)
-				empty_flag = true;
-			T ret_val = first_item->value;
-			first_item = first_item->next;
-			first_item->prev = 0;
-			length--;
-			return ret_val;
-		}
-
-		void insert(int index, T val) {		// BROKEN
-			length++;
-			element* ptr = first_item;
-			int i = 0;
-			while(i != index) {
-				ptr = ptr->next;
-				i++;
-			}
-			element* tmp = ptr->prev;
-			element* new_elem = new element;
-			new_elem->value = val;
-			new_elem->prev = tmp;
-			tmp->next = new_elem;
-			ptr->prev = new_elem;
-			new_elem->next = ptr;
-		}
-
-		void change_value(int index ,T new_value) {           //we start indexing from 0
-			element* ptr = 0;
-			if(index >= (length/2)) {
-				ptr = last_item;
-				for(int i = 0; i < (length - index - 1); i++) {
-				     ptr = ptr->prev;
-				}
-			} else {
-				ptr = first_item;
-				for(int i = 0; i < index ; i++)
+			if (_head == _tail)
+			{
+				if (_head->value == value)
 				{
-				   ptr = ptr->next;
+					_head.reset();
+					_tail.reset();
 				}
-		  	}
-		  	ptr->value = new_value;
-		}
-
-
-
-		//-----------------for development purpose only-------------------------------//
-
-		T seek_value(int index) {
-			element* watcher;
-			int i = 0;
-			watcher = first_item;
-			while(i != index) {
-			  	watcher = watcher->next;
-			  	i++;
+				else
+				{
+					std::cout << "RemoveCertainElement message: value to remove not found! \n";
+					return;
+				}
 			}
-			return watcher->value;
-		}
-
-
-		element* seek_next(int index) {
-			element* watcher;
-			if(index >= (length/2)) {
-			   watcher = last_item;
-			   for(int i = 0; i < (length - index - 1); i++) {
-			  	  watcher = watcher->prev;
-			   }
-			} else {
-			   watcher = first_item;
-			   for(int i = 0; i < index ; i++) {
-			  	watcher = watcher->next;
-			   }
+			else if (_head->value == value)
+			{
+				_head = _head->nextNode;
+				_head->prvNode.reset();
 			}
-			return watcher->next;
-		}
-
-		element* seek_prev(int index) {
-			element* watcher;
-			if(index >= (length/2)) {
-			   watcher = last_item;
-			   for(int i = 0; i < (length - index - 1); i++) {
-			  	  watcher = watcher->prev;
-			   }
-			} else {
-			   watcher = firstItem;
-			   for(int i = 0; i < index ; i++) {
-			  	watcher = watcher->next;
-			   }
+			else if (_tail->value == value)
+			{
+				_tail = _tail->prvNode;
+				_tail->nextNode.reset();
 			}
-			return watcher->prev;
+			else
+			{
+				std::shared_ptr<Node<T>> current = _head;
+
+				while (current->value != value)
+				{
+					current = current->nextNode;
+					if (current == nullptr)
+						return;
+				}
+				current->nextNode->prvNode = current->prvNode;
+				current->prvNode->nextNode = current->nextNode;
+				current.reset();
+			}
+		}
+		void rm_first()
+		{
+			if (_head)
+			{
+				if (_head->nextNode)
+				{
+					_head = _head->nextNode;
+					_head->prvNode.reset();
+				}
+				else
+				{
+					_tail.reset();
+					_head.reset();
+				}
+
+			}
+			else
+			{
+				std::cout << "RemoveFirst message: Error! First element does not exist!";
+			}
+		}
+		void rm_last()
+		{
+			if (_tail)
+			{
+				if (_tail->prvNode)
+				{
+					_tail = _tail->prvNode;
+					_tail->nextNode.reset();
+				}
+				else
+				{
+					_tail.reset();
+					_head.reset();
+				}
+			}
+			else
+			{
+				std::cout << "RemoveLast message: Error! Last element does not exist!";
+			}
+		}
+		void clear()
+		{
+			std::shared_ptr<Node<T>> current = _head;
+			std::shared_ptr<Node<T>> erasePtr = nullptr;
+
+			_head = nullptr;
+			_tail = nullptr;
+			while (current != nullptr)
+			{
+				erasePtr = current;
+				erasePtr.reset();
+				current = current->nextNode;
+			}
+
+		}
+		void reverse()
+		{
+			std::shared_ptr<Node<T>> reverseHelpPtr = nullptr;
+			std::shared_ptr<Node<T>> current = _head;
+			while (current != nullptr)
+			{
+				reverseHelpPtr = current->nextNode;
+				current->nextNode = current->prvNode;
+				current->prvNode = reverseHelpPtr;
+			}
+			reverseHelpPtr = _head;
+			_head = _tail;
+			_tail = reverseHelpPtr;
+		}
+		void modify_at(const int pos, const T& value)
+		{
+			if (!_head || GetLength() <= pos || pos < 0)
+			{
+				std::cout << " getValueAtPosition message: Error! Position out of range or empty list!";
+				return;
+			}
+
+
+			int iterator = 0;
+			std::shared_ptr<Node<T>> current = _head;
+
+			while (iterator != pos && current != nullptr)
+			{
+				current = current->nextNode;
+				iterator++;
+			}
+			if (current != nullptr)
+				current->value = value;
+			else
+			{
+				std::cout << " getValueAtPosition message: Error! Position out of range or empty list!";
+
+			}
+
+		}
+		int length()
+		{
+			int length = 0;
+			std::shared_ptr<Node<T>> iterator = _head;
+			while (iterator != nullptr)
+			{
+				length++;
+				iterator = iterator->nextNode;
+			}
+			return length;
+
+		}
+		bool empty()
+		{
+			int length = 0;
+			std::shared_ptr<Node<T>> iterator = _head;
+			while (iterator != nullptr)
+			{
+				length++;
+				iterator = iterator->nextNode;
+			}
+			if (length == 0)
+				return true;
+			return false;
+		}
+		T at(int pos)
+		{
+			int iterator = 0;
+			std::shared_ptr<Node<T>> current = _head;
+
+			while (iterator != pos && current != nullptr)
+			{
+				current = current->nextNode;
+				iterator++;
+			}
+			if (current != nullptr)
+				return current->value;
+			else
+			{
+				std::cout << " getValueAtPosition message: Error! Position out of range or empty list!";
+				return -1;
+			}
 		}
 
-
-  };
-
+	};
 }
-
-#endif
