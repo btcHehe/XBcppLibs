@@ -8,7 +8,7 @@ It's set of our own implementations of c++ libraries. All libraries are in **xb:
 name of library                         |	short description                                               | status
 ----------------------------------------|-------------------------------------------------------------------|------------------------
 XBMath.h		                        | library containing math functions and constants                   | WIP  
-XBList.h		                        | library containing two-way linked list template class             | WIP
+[XBList.h](./docs/XBList.md)		                        | library containing two-way linked list template class             | WIP
 [XBVector.h](./docs/XBVector.md)        | library containing Vector template class                          | finished
 [XBQueue.h](./docs/XBQueue.md) 		    | library containing Queue template class                           | finished
 [XBStack.h](./docs/XBStack.md) 		    | library containing Stack template class                           | finished
